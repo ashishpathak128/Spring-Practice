@@ -1,0 +1,49 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:context="http://www.springframework.org/schema/context"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans 
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/context 
+     http://www.springframework.org/schema/context/spring-context.xsd"
+   default-init-method="Myinit" default-destroy-method="Mydestroy"
+   >
+   <context:annotation-config />
+   
+   <bean id="triangle" class="org.ashish.packag.Triangle" autowire="byName"></bean>
+   
+   <bean id="pointA" class="org.ashish.packag.Point" >
+	    <qualifier value="circleRelated" ></qualifier>
+	   	<property name="x" value="${pointA.pointX}"></property>
+	   	<property name="y" value="${pointA.pointY}"></property>
+   </bean>
+   <bean name="pointB" class="org.ashish.packag.Point">
+	   	<property name="x" value="-20"></property>
+	   	<property name="y" value="0"></property>
+   </bean>
+   <bean name="pointC" class="org.ashish.packag.Point">
+	   	<property name="x" value="20"></property>
+	   	<property name="y" value="0"></property>
+   </bean>
+   <alias name="triangle" alias="triangle-alias"></alias>
+   <bean class="org.ashish.packag.DisplaynamePostBeanProcessor"></bean>
+   <bean class="org.ashish.packag.MyBeanFactoryPostProcessor" ></bean>
+   <!-- <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" ></bean> -->
+   
+   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
+   		<property name="locations" value="pointsconfig.properties"></property>
+   </bean>
+   
+   <bean id="circle" class="org.ashish.packag.Circle"></bean> 
+   
+   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+   		<property name="basenames">
+   			<list>
+   				<value>messages</value>
+   			</list>
+   		</property>
+   </bean>
+   
+   <context:component-scan base-package="org.ashish.packag"></context:component-scan>
+   </beans>
